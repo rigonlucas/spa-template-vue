@@ -39,8 +39,14 @@ import "@/bootstrap/index" //INICIALIZADOR DE COMPONENTES DE MÁSCARA
  * ESTILOS DA APLICAÇÃO
  *
  */
-import "./style/style.scss"
+//import "./style/style.scss"
 import "mdi-icons/css/materialdesignicons.min.css"
+
+import Vuetify from "vuetify"
+import "vuetify/dist/vuetify.min.css"
+import "vuetify/dist/vuetify.min.js"
+
+Vue.use(Vuetify)
 
 Vue.use(ApiPlugin)
 Vue.config.productionTip = false
@@ -48,5 +54,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  vuetify : new Vuetify(),
   render: h => h(App),
 }).$mount("#app")

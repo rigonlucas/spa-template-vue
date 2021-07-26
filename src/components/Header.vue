@@ -12,7 +12,7 @@
                 </router-link>
             </div>
             <div class="header-center">
-                <product-search />
+                AAAA
             </div>
             <div class="header-right">
                 <router-link
@@ -35,13 +35,12 @@
 </template>
 
 <script>
-import ProductSearch from "./System/Product/ProductSearch"
 import { mapActions, mapGetters } from "vuex"
 import BaseButton from "./Base/BaseButton"
 
 export default {
   name: "TheHeader",
-  components: {BaseButton, ProductSearch },
+  components: {BaseButton },
   computed: {
     ...mapGetters({ isAuthenticated: "Auth/isAuthenticated" }),
   },

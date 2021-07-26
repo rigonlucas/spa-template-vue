@@ -1,6 +1,5 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
-
 import store from "@/store"
 
 /**
@@ -11,7 +10,6 @@ import store from "@/store"
 import Auth from "./modules/auth"
 import User from "./modules/user"
 import HomeGeneric from "./modules/home/home"
-import ProductsPublic from "./modules/servicos/products/public"
 import ComponetnsExemplo from "./modules/components"
 
 Vue.use(VueRouter)
@@ -26,7 +24,6 @@ const routes = [
   ...Auth,
   ...User,
   ...HomeGeneric,
-  ...ProductsPublic,
   ...ComponetnsExemplo,
 ]
 
