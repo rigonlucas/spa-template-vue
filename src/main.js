@@ -44,16 +44,21 @@ import "mdi-icons/css/materialdesignicons.min.css"
 
 import Vuetify from "vuetify"
 import "vuetify/dist/vuetify.min.css"
-import "vuetify/dist/vuetify.min.js"
+//import "vuetify/dist/vuetify.min.js"
 
 Vue.use(Vuetify)
-
 Vue.use(ApiPlugin)
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
-  vuetify : new Vuetify(),
+  vuetify : new Vuetify(
+      {
+            icons: {
+              iconfont: "mdi",
+            },
+      }
+  ),
   render: h => h(App),
 }).$mount("#app")
