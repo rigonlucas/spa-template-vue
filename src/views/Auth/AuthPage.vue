@@ -1,21 +1,23 @@
 <template>
-    <section class="auth-page d-flex justify-content-center mt-3 bg-light py-5 shadow-sm">
-        <div class="login-wrapper">
-            <login class="bg-body border-0"/>
-        </div>
-        <div class="register-wrapper">
-            <register class="bg-body border-0" />
-        </div>
-    </section>
+    <v-row
+        justify="center"
+        align="center"
+    >
+        <v-col
+            cols="10"
+            sm="3"
+        >
+            <login class="pa-md-4 mx-lg-auto"/>
+        </v-col>
+    </v-row>
 </template>
 
 <script>
 import Login from "@/views/Auth/components/Login"
-import Register from "@/views/Auth/components/Register"
 
 export default {
   name: "AuthPage",
-  components: { Register, Login },
+  components: { Login },
   created() {
     console.log(this.$route.query)
   },

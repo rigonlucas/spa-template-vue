@@ -1,55 +1,46 @@
 <template>
-    <div class="card">
-        <div class="card-body">
-            <form
-                class="login-form"
-                @submit.prevent="login"
-            >
-                <div class="mb-3">
-                    <base-input
-                        id="email"
-                        type="email"
-                        name="email"
-                        required
-                        v-model="form.email"
-                        label="Email"
-                        :errors="errors.email"
-                    />
+    <v-flex fill-height align="center">
+        <v-card :loading="isLoading">
+            <v-card-text class="pt-4">
+                <div>
+                    <v-form v-model="valid" ref="form">
+                        <v-text-field
+                            label="E-mail"
+                            v-model="form.email"
+                            :rules="emailRules"
+                            required
+                        ></v-text-field>
+                        <v-text-field
+                            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="showPassword ? 'text' : 'password'"
+                            :rules="passwordRules"
+                            v-model="form.password"
+                            label="Senha"
+                            min="8"
+                            counter
+                            required
+                            @click:append="showPassword = !showPassword"
+
+                        ></v-text-field>
+                        <v-layout justify-space-between>
+                            <router-link to="/">esqueci minha senha</router-link>
+                            <v-btn @click="login" :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }">Login</v-btn>
+                        </v-layout>
+                    </v-form>
                 </div>
-                <div class="mb-3">
-                    <base-input
-                        id="password"
-                        type="password"
-                        name="password"
-                        required
-                        v-model="form.password"
-                        label="Password"
-                        :errors="errors.password"
-                    />
-                </div>
-                <base-button
-                    type="submit"
-                    variant="primary"
-                    :loading="isLoading"
-                >
-                    Entrar
-                </base-button>
-            </form>
-            <p class="mt-2">
-                <a href="/">Esqueceu sua senha? Clique aqui</a>
-            </p>
-        </div>
-    </div>
+            </v-card-text>
+        </v-card>
+    </v-flex>
+
 </template>
 
 <script>
-import BaseButton from "@/components/Base/BaseButton"
+//import BaseButton from "@/components/Base/BaseButton"
 import { mapActions } from "vuex"
-import BaseInput from "@/components/Base/BaseInput"
+//import BaseInput from "@/components/Base/BaseInput"
 
 export default {
   name: "Login",
-  components: {BaseInput, BaseButton},
   data() {
     return {
       form: {
@@ -57,6 +48,15 @@ export default {
         password: "",
       },
       errors: {},
+      valid: false,
+      e1: true,
+      showPassword: false,
+      passwordRules: [
+          (v) => !!v || "Senha obrigatório",
+      ],
+      emailRules: [
+        (v) => !!v || "E-mail obrigatóriio",
+      ],
       isLoading: false,
     }
   },
@@ -70,7 +70,7 @@ export default {
       try {
         await this.dispatchLogin(this.form)
 
-        this.$router.push({ name: "user-account" })
+        this.$router.push({ name: "home" })
       } catch ({ response }) {
         if (response.data.errors) {
           this.errors = response.data.errors

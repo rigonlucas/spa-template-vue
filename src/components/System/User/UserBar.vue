@@ -61,6 +61,7 @@
                         depressed
                         rounded
                         text
+                        @click="logout"
                     >
                         <i class="mdi mdi-exit-to-app"></i>
                         Sair
@@ -72,6 +73,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex"
+
 export default {
   name: "UserBar",
   data() {
@@ -84,6 +87,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions({ dispatchLogout: "Auth/logout"  }),
+    async logout() {
+      await this.dispatchLogout()
+      this.$router.push({ name: "login", query: { param: "teste", teste: "teste" } })
+    },
     themeChange(){
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     },
