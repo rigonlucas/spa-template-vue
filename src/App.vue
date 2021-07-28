@@ -6,19 +6,34 @@
                     app
                     flat
                     v-model="showLeftMenu"
+                    id="left"
                 >
                     <bar-menu-left/>
                 </v-navigation-drawer>
+
+                <v-navigation-drawer
+                    app
+                    flat
+                    right
+                    v-model="showRightMenu"
+                    id="right"
+                >
+                    <bar-menu-right/>
+                </v-navigation-drawer>
+
                 <v-app-bar
                     app
                     flat
                     color = "#003E7D"
                     class="white--text"
                 >
-                    <v-app-bar-nav-icon @click.stop="toggleLeftMenu"  class="white--text"></v-app-bar-nav-icon>
+                    <v-app-bar-nav-icon @click.stop="toggleLeftMenu" class="white--text"></v-app-bar-nav-icon>
                     <bar-header-left/>
                     <v-spacer></v-spacer>
                     <bar-header-right/>
+                    <v-app-bar-nav-icon @click.stop="toggleRightMenu" class="white--text">
+                        <v-icon>mdi-toolbox</v-icon>
+                    </v-app-bar-nav-icon>
                 </v-app-bar>
             </div>
 
@@ -42,8 +57,10 @@
   import BarHeaderRight from "@/components/System/Bar/BarHeaderRight"
   import BarHeaderLeft from "@/components/System/Bar/BarHeaderLeft"
   import { mapGetters} from "vuex"
+  import BarMenuRight from "@/components/System/Bar/BarMenuRight"
   export default {
     components: {
+      BarMenuRight,
       BarHeaderLeft,
       BarHeaderRight,
       BarMenuLeft,
@@ -59,6 +76,7 @@
       ],
       backgroundColor: "blue",
       showLeftMenu: false,
+      showRightMenu: false,
     }),
     computed: {
       ...mapGetters({ isAuthenticated: "Auth/isAuthenticated" }),
@@ -73,6 +91,9 @@
     methods: {
       toggleLeftMenu(){
         this.showLeftMenu = !this.showLeftMenu
+      },
+      toggleRightMenu(){
+        this.showRightMenu = !this.showRightMenu
       },
     },
   }
