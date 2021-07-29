@@ -38,6 +38,9 @@ export default {
       this.datasets[index]["backgroundColor"] = this.colorsList[index].backgroundColor
       this.datasets[index]["borderColor"] = this.colorsList[index].borderColor
       this.datasets[index]["pointBackgroundColor"] = this.colorsList[index].pointBackgroundColor
+      this.datasets[index]["pointHoverRadius"] = this.colorsList[index].pointHoverRadius
+      this.datasets[index]["pointRadius"] = this.colorsList[index].pointRadius
+      this.datasets[index]["tension"] = this.colorsList[index].tension
     })
     this.chartData = {
       labels: this.labels,
