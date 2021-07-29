@@ -1,11 +1,14 @@
 <template>
     <div>
         <v-toolbar-title>
-            <router-link class="white--text text-decoration-none" :to="{ name: 'home' }">UFN</router-link>
+            <router-link
+                class="white--text text-decoration-none"
+                :to="{ name: 'home' }">
+                UFN
+            </router-link>
         </v-toolbar-title>
     </div>
 </template>
-
 <script>
 export default {
   name: "BarHeaderLeft",

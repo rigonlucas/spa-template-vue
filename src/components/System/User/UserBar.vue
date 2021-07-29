@@ -9,8 +9,8 @@
             <v-btn
                 icon
                 x-large
-                v-on="on"
                 class="mx-1"
+                v-on="on"
             >
                 <v-avatar
                     color="brown"

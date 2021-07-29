@@ -3,20 +3,20 @@
         <v-app id="inspire">
             <div v-if="isAuthenticated">
                 <v-navigation-drawer
+                    id="left"
+                    v-model="showLeftMenu"
                     app
                     flat
-                    v-model="showLeftMenu"
-                    id="left"
                 >
                     <bar-menu-left/>
                 </v-navigation-drawer>
 
                 <v-navigation-drawer
+                    id="right"
+                    v-model="showRightMenu"
                     app
                     flat
                     right
-                    v-model="showRightMenu"
-                    id="right"
                 >
                     <bar-menu-right/>
                 </v-navigation-drawer>
@@ -24,14 +24,18 @@
                 <v-app-bar
                     app
                     flat
-                    color = "#003E7D"
+                    color="#003E7D"
                     class="white--text"
                 >
-                    <v-app-bar-nav-icon @click.stop="toggleLeftMenu" class="white--text"></v-app-bar-nav-icon>
+                    <v-app-bar-nav-icon
+                        class="white--text"
+                        @click.stop="toggleLeftMenu"></v-app-bar-nav-icon>
                     <bar-header-left/>
                     <v-spacer></v-spacer>
                     <bar-header-right/>
-                    <v-app-bar-nav-icon @click.stop="toggleRightMenu" class="white--text">
+                    <v-app-bar-nav-icon
+                        class="white--text"
+                        @click.stop="toggleRightMenu">
                         <v-icon>mdi-toolbox</v-icon>
                     </v-app-bar-nav-icon>
                 </v-app-bar>
@@ -43,7 +47,9 @@
                 </v-container>
             </v-main>
 
-            <v-footer app v-if="isAuthenticated">
+            <v-footer
+                v-if="isAuthenticated"
+                app>
                 EITA
             </v-footer>
         </v-app>
