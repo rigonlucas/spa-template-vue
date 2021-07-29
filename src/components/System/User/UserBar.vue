@@ -10,6 +10,7 @@
                 icon
                 x-large
                 v-on="on"
+                class="mx-1"
             >
                 <v-avatar
                     color="brown"
