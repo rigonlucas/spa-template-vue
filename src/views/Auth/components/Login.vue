@@ -1,20 +1,24 @@
 <template>
-    <v-flex fill-height align="center">
+    <v-flex
+        fill-height
+        align="center">
         <v-card :loading="isLoading">
             <v-card-text class="pt-4">
                 <div>
-                    <v-form v-model="valid" ref="form">
+                    <v-form
+                        ref="form"
+                        v-model="valid">
                         <v-text-field
-                            label="E-mail"
                             v-model="form.email"
+                            label="E-mail"
                             :rules="emailRules"
                             required
                         ></v-text-field>
                         <v-text-field
+                            v-model="form.password"
                             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                             :type="showPassword ? 'text' : 'password'"
                             :rules="passwordRules"
-                            v-model="form.password"
                             label="Senha"
                             min="8"
                             counter
@@ -24,14 +28,17 @@
                         ></v-text-field>
                         <v-layout justify-space-between>
                             <router-link to="/">esqueci minha senha</router-link>
-                            <v-btn @click="login" :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }">Login</v-btn>
+                            <v-btn
+                                :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }"
+                                @click="login">
+                                Login
+                            </v-btn>
                         </v-layout>
                     </v-form>
                 </div>
             </v-card-text>
         </v-card>
     </v-flex>
-
 </template>
 
 <script>

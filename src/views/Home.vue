@@ -11,7 +11,7 @@
                     Click
                 </v-btn>
             </v-col>
-            <v-col>
+            <v-col cols="2">
                 <v-dialog
                     v-model="dialog"
                     persistent
@@ -23,6 +23,8 @@
                             color="primary"
                             dark
                             v-bind="attrs"
+                            block
+                            small
                             v-on="on"
                         >
                             Open Dialog
@@ -53,6 +55,13 @@
                     </v-card>
                 </v-dialog>
             </v-col>
+            <v-col>
+                <line-chart
+                    title_props="BIzinho"
+                    :labels_props="labelsLineChart"
+                    :datasets_props="datasetsLineChart"
+                />
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -63,14 +72,46 @@
 // import { mapActions } from "vuex"
 
 
+import LineChart from "@/components/Base/LineChart"
 export default {
   name: "Home",
   components: {
-
+    LineChart,
   },
   data () {
     return {
       dialog: false,
+      labelsLineChart:[
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+      ],
+      datasetsLineChart:[
+        {
+          label: "Financeiro",
+          data: [21, 100, 53, 94, 23, 64, 100],
+        },
+        {
+          label: "Desempenho em avaliações",
+          data: [62, 30, 50, 90, 80, 6, 60],
+        },
+        {
+          label: "Entrega de atividades",
+          data: [12, 30, 54, 8, 0, 18, 69],
+        },
+        {
+          label: "Desempenho em avaliações sad",
+          data: [122, 30, 542, 8, 10, 128, 69],
+        },
+        {
+          label: "Desempenho em avaliações sad",
+          data: [231, 123, 542, 8, 10, 231, 69],
+        },
+      ],
     }
   },
   methods: {

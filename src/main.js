@@ -51,14 +51,13 @@ Vue.use(ApiPlugin)
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  vuetify : new Vuetify(
+    router,
+    store,
+    vuetify : new Vuetify(
       {
             icons: {
               iconfont: "mdi",
             },
-      }
-  ),
-  render: h => h(App),
+    }),
+    render: h => h(App),
 }).$mount("#app")
