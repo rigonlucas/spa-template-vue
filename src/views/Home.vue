@@ -1,6 +1,7 @@
 <template>
     <v-container>
-        <v-row>
+        <redacao-texto/>
+        <v-row v-show="false">
             <v-col cols="2">
                 <v-btn
                     color="error"
@@ -56,11 +57,18 @@
                 </v-dialog>
             </v-col>
             <v-col>
-                <line-chart
-                    title_props="BIzinho"
-                    :labels_props="labelsLineChart"
-                    :datasets_props="datasetsLineChart"
-                />
+                <v-card>
+                    <v-card-title>
+                        Dashboard
+                    </v-card-title>
+                    <v-card-text>
+                        <line-chart
+                            title_props="BIzinho"
+                            :labels_props="labelsLineChart"
+                            :datasets_props="datasetsLineChart"
+                        />
+                    </v-card-text>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
@@ -73,9 +81,11 @@
 
 
 import LineChart from "@/components/Base/LineChart"
+import RedacaoTexto from "@/components/System/Redacao/RedacaoTexto"
 export default {
   name: "Home",
   components: {
+    RedacaoTexto,
     LineChart,
   },
   data () {

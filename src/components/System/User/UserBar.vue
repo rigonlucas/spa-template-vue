@@ -16,7 +16,7 @@
                     color="brown"
                     size="36"
                 >
-                    <span class="white--text text-h6">{{ user.initials }}</span>
+                    <span class="white--text text-h6">{{ user.name.charAt(0) }}</span>
                 </v-avatar>
             </v-btn>
         </template>
@@ -26,9 +26,9 @@
                     <v-avatar
                         color="brown"
                     >
-                        <span class="white--text text-h5">{{ user.initials }}</span>
+                        <span class="white--text text-h5">{{ user.name.charAt(0) }}</span>
                     </v-avatar>
-                    <h3>{{ user.fullName }}</h3>
+                    <h3>{{ user.name }}</h3>
                     <p class="text-caption mt-1">
                         {{ user.email }}
                     </p>
@@ -80,11 +80,7 @@ export default {
   name: "UserBar",
   data() {
     return {
-      user: {
-        initials: "LR",
-        fullName: "Lucas",
-        email: "lucas.rigon@ufn.edu.br",
-      },
+      user: this.$store.getters["Auth/user"],
     }
   },
   methods: {
