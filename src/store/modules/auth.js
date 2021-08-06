@@ -1,5 +1,5 @@
 import { login, register } from "@/services/AuthService" // { login, register } REFENCIA ESPECIFICAMENTE DUAS FUNÇÕES DENTRO DO ARQUIVO
-import { logout } from "../../services/AuthService" // { logout } REFENCIA ESPECIFICAMENTE UMA FUNÇÃO DENTRO DO ARQUIVO
+import { logout } from "@/services/AuthService" // { logout } REFENCIA ESPECIFICAMENTE UMA FUNÇÃO DENTRO DO ARQUIVO
 
 export default {
   namespaced: true,
@@ -27,8 +27,8 @@ export default {
         const { data } = await register(userData)
 
           //CHAMA A ACTION
-        commit("SET_USER", data.data.user)
-        commit("SET_TOKEN", data.data.token)
+        commit("SET_USER", data.user)
+        commit("SET_TOKEN", data.token)
     },
       /**
        * LOGIN E PERSISTÊNCIA DOS DADOS NO LOCAL STORAGE
@@ -40,8 +40,8 @@ export default {
     async login({ commit }, { email, password }) {
         const { data } = await login(email, password)
 
-        commit("SET_USER", data.data.user)
-        commit("SET_TOKEN", data.data.token)
+        commit("SET_USER", data.user)
+        commit("SET_TOKEN", data.token)
     },
       /**
        * LIMPAR A SESSÃO DO USUÁRIO E PERSISTIR O LOGOUT

@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <div>
         <redacao-texto/>
         <v-row v-show="false">
             <v-col cols="2">
@@ -71,7 +71,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    </v-container>
+    </div>
 </template>
 
 <script>

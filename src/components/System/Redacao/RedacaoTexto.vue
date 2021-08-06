@@ -1,5 +1,24 @@
 <template>
     <div>
+        <v-snackbar
+            v-model="snackbar.snackbarAviso"
+            :timeout="snackbar.timer"
+            @close="save.message = null"
+        >
+            <b class="text-uppercase">
+                {{ this.snackbar.message }}
+            </b>
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    text
+                    v-bind="attrs"
+                    color="pink"
+                    @click="snackbar.snackbarAviso = false"
+                >
+                    fechar
+                </v-btn>
+            </template>
+        </v-snackbar>
         <v-dialog
             v-model="acceptVisible"
             persistent
@@ -26,52 +45,43 @@
             </v-card>
         </v-dialog>
         <v-row v-if="userTerms">
-            <v-col cols="10">
+            <v-col
+                cols="12"
+                sm="12"
+                md="9">
                 <v-card
                     outlined
                     height="100vh">
-                    <v-toolbar
-                        flat
-                    >
+                    <v-toolbar flat>
                         <v-toolbar-title>Minha redação</v-toolbar-title>
                     </v-toolbar>
-                    <v-tabs
-                        vertical
-                    >
+                    <v-tabs centered>
                         <v-tab>
-                            <v-icon
-                                left
-                                color="yellow darken-2">
+                            <v-icon left>
                                 mdi-comment-question-outline
                             </v-icon>
                             orientações
                         </v-tab>
                         <v-tab>
-                            <v-icon
-                                left
-                                color="primary">
+                            <v-icon left>
                                 mdi-book
                             </v-icon>
                             meu tema
                         </v-tab>
                         <v-tab>
-                            <v-icon
-                                left
-                                color="yellow darken-2">
+                            <v-icon left>
                                 mdi-pen
                             </v-icon>
                             Escreva
                         </v-tab>
-                        <v-tab :disabled="this.writePercent < 100? true : false">
-                            <v-icon
-                                left
-                                color="green">
+                        <v-tab :disabled="this.writePercent < 100">
+                            <v-icon left>
                                 mdi-check-circle
                             </v-icon>
                             enviar
                         </v-tab>
 
-                        <v-tab-item>
+                        <v-tab-item class="py-1 px-8">
                             <v-card
                                 outlined
                                 flat>
@@ -82,7 +92,7 @@
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
-                        <v-tab-item>
+                        <v-tab-item class="py-1 px-8">
                             <v-card
                                 outlined
                                 flat>
@@ -120,10 +130,11 @@
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
-                        <v-tab-item>
+                        <v-tab-item class="py-1 px-8">
                             <v-card
                                 outlined
-                                flat>
+                                flat
+                            >
                                 <v-card-text>
                                     <v-progress-linear
                                         :value="writePercent"
@@ -142,14 +153,14 @@
                                         filled
                                         :label="this.texto ? '' : 'Escreva sua redação aqui' "
                                         auto-grow
-
+                                        @paste.prevent
                                         @drag.prevent
-                                        @keyup="typing"
+                                        @keydown="typing"
                                     ></v-textarea>
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
-                        <v-tab-item>
+                        <v-tab-item class="py-1 px-8">
                             <v-card
                                 outlined
                                 flat>
@@ -164,7 +175,10 @@
                     </v-tabs>
                 </v-card>
             </v-col>
-            <v-col cols="2">
+            <v-col
+                cols="12"
+                sm="12"
+                md="3">
                 <v-card outlined>
                     <v-card-text
                         align="center">
@@ -221,24 +235,43 @@
                 <v-divider class="py-2"></v-divider>
                 <v-card outlined>
                     <v-card-text>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                    block
-                                    color="primary"
-                                    :loading="isSavingLocal"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    @click="saveLocal"
-                                >
-                                    <v-icon dark>
-                                        mdi-check
-                                    </v-icon>
-                                    Salvar
-                                </v-btn>
-                            </template>
-                            <span>Salvamento local</span>
-                        </v-tooltip>
+                        <v-row>
+                            <v-col cols="6">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                            block
+                                            color="primary"
+                                            :loading="isSavingLocal"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            @click="saveLocal"
+                                        >
+                                            <v-icon dark>
+                                                mdi-check
+                                            </v-icon>
+                                            Salvar
+                                        </v-btn>
+                                    </template>
+                                    <span>Salvamento local</span>
+                                </v-tooltip>
+                            </v-col>
+                            <v-col>
+                                <div v-if="!!save.lastSave">
+                                    <small>
+                                        Salvo às
+                                        <b>
+                                            {{
+                                                this.save.lastSave.getHours() + ":" + this.save.lastSave.getMinutes() + ":" + this.save.lastSave.getSeconds()
+                                            }}
+                                        </b>
+                                    </small>
+                                </div>
+                                <div v-else>
+                                    <small class="red--text text--darken-2">Você ainda <b>não salvou</b> sua redação</small>
+                                </div>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -262,28 +295,41 @@ export default {
       countDown: 7200,// 2 horas
       countDownFix:7200,
       charMin: 1000,
-      writeColor: "red lighten-2",
+      writeColor: "red darken-2",
       isTyping: false,
       isSavingLocal: false,
-      saveMessage: {
-        error: null,
-        success: "null",
+      save: {
+        lastSave: null,
+      },
+      snackbar:{
+        message: null,
+        snackbarAviso: false,
+        timer: 9000,
+        color: null,
       },
     }
   },
   watch: {
-    texto: function (newValue){
+    texto: function (newValue, oldValue){
       if (newValue){
         let MIN_CHAR = this.charMin
-        let TEXTO_LENGTH = this.texto.length
-        if (MIN_CHAR > TEXTO_LENGTH){
-          this.writePercent = (100 * TEXTO_LENGTH)/MIN_CHAR
-          if (TEXTO_LENGTH < 200){
+        let NEW_TEXTO_LENGTH = newValue.length
+        let OLD_TEXTO_LENGTH = oldValue.length
+        let MESSAGE = "lembre-se de salvar sua redação periodicamente"
+        if (MIN_CHAR > NEW_TEXTO_LENGTH){
+          this.writePercent = (100 * NEW_TEXTO_LENGTH)/MIN_CHAR
+          if (NEW_TEXTO_LENGTH === 200){
             this.writeColor = "red ligthen-1"
-          } else if (TEXTO_LENGTH < 700){
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH)
+              {this.message(MESSAGE, 10000)}
+          } else if (NEW_TEXTO_LENGTH === 700){
             this.writeColor = "yellow darken-1"
-          } else if (TEXTO_LENGTH < 1000){
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH)
+              {this.message(MESSAGE, 10000)}
+          } else if (NEW_TEXTO_LENGTH === 1000){
             this.writeColor = "blue darken-1"
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH)
+              {this.message(MESSAGE, 10000)}
           }
         } else {
           this.writePercent = 100
@@ -362,16 +408,25 @@ export default {
       }
     },
     typing(){
-      console.log(this.texto)
+
     },
     saveLocal(){
       if (!this.isSavingLocal){
         this.isSavingLocal = true
         console.log(this.texto)
+
         setTimeout(() =>{
+          this.message("Redação salva no SEU NAVEGADOR", 10000)
           this.isSavingLocal = false
+          this.save.lastSave = new Date()
         }, 1000)
       }
+    },
+    message(message, timer){
+      this.snackbar.message = message
+      this.snackbar.color = "info"
+      this.snackbar.timer = timer
+      this.snackbar.snackbarAviso = true
     },
   },
 }
