@@ -153,7 +153,7 @@
                                         filled
                                         :label="this.texto ? '' : 'Escreva sua redação aqui' "
                                         auto-grow
-                                        @paste.prevent
+
                                         @drag.prevent
                                         @keydown="typing"
                                     ></v-textarea>
@@ -259,7 +259,7 @@
                             <v-col>
                                 <div v-if="!!save.lastSave">
                                     <small>
-                                        Salvo às
+                                        Redacação salva às
                                         <b>
                                             {{
                                                 this.save.lastSave.getHours() + ":" + this.save.lastSave.getMinutes() + ":" + this.save.lastSave.getSeconds()
@@ -318,22 +318,32 @@ export default {
         let MESSAGE = "lembre-se de salvar sua redação periodicamente"
         if (MIN_CHAR > NEW_TEXTO_LENGTH){
           this.writePercent = (100 * NEW_TEXTO_LENGTH)/MIN_CHAR
-          if (NEW_TEXTO_LENGTH === 200){
+          if (this.betweenTime(0, 200, NEW_TEXTO_LENGTH) && this.writeColor !== "red ligthen-1"){
             this.writeColor = "red ligthen-1"
-            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH)
-              {this.message(MESSAGE, 10000)}
-          } else if (NEW_TEXTO_LENGTH === 700){
-            this.writeColor = "yellow darken-1"
-            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH)
-              {this.message(MESSAGE, 10000)}
-          } else if (NEW_TEXTO_LENGTH === 1000){
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH) {
+              this.message(MESSAGE, 10000)
+            }
+          } else if (this.betweenTime(200, 500, NEW_TEXTO_LENGTH) && this.writeColor !== "yellow darken-1"){
+            this.writeColor = "orange darken-1"
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH) {
+              this.message(MESSAGE, 10000)
+            }
+          } else if (this.betweenTime(500, 800, NEW_TEXTO_LENGTH) && this.writeColor !== "blue darken-1"){
             this.writeColor = "blue darken-1"
-            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH)
-              {this.message(MESSAGE, 10000)}
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH) {
+              this.message(MESSAGE, 10000)
+            }
+          } else if (this.betweenTime(800, 1000, NEW_TEXTO_LENGTH) && this.writeColor !== "purple darken-1"){
+            this.writeColor = "purple darken-1"
+            if (OLD_TEXTO_LENGTH < NEW_TEXTO_LENGTH) {
+              this.message(MESSAGE, 10000)
+            }
           }
         } else {
-          this.writePercent = 100
-          this.writeColor = "green darken-1"
+          if (this.writeColor !== "green darken-1" || this.writePercent < 100){
+            this.writePercent = 100
+            this.writeColor = "green darken-1"
+          }
         }
       }
     },
@@ -351,7 +361,6 @@ export default {
           this.colorWarning = "red darken-2"
           this.saveLocal()
         }
-        //console.log(newValue)
         if (newValue === 1){
           this.saveLocal()
           this.timer = "--:--:--"
@@ -427,6 +436,9 @@ export default {
       this.snackbar.color = "info"
       this.snackbar.timer = timer
       this.snackbar.snackbarAviso = true
+    },
+    betweenTime(valueStart, valueEnd, value){
+      return value > valueStart && value <= valueEnd
     },
   },
 }
