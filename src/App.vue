@@ -62,7 +62,7 @@
   import BarMenuLeft from "@/components/System/Bar/BarMenuLeft"
   import BarHeaderRight from "@/components/System/Bar/BarHeaderRight"
   import BarHeaderLeft from "@/components/System/Bar/BarHeaderLeft"
-  import { mapGetters} from "vuex"
+  import { mapGetters } from "vuex"
   import BarMenuRight from "@/components/System/Bar/BarMenuRight"
   export default {
     components: {
@@ -80,6 +80,7 @@
         "Profile",
         "Updates",
       ],
+      menus: [],
       backgroundColor: "blue",
       showLeftMenu: false,
       showRightMenu: false,
@@ -94,7 +95,13 @@
         return "blue darken-5 overflow-hiidden"
       },
     },
+    mounted() {
+      this.menus = this.userMenus()
+      console.log(Object.keys(this.menus.left))
+      console.log(Object.entries(this.menus.left))
+    },
     methods: {
+      ...mapGetters({ userMenus: "Auth/userMenus" }),
       toggleLeftMenu(){
         this.showLeftMenu = !this.showLeftMenu
       },

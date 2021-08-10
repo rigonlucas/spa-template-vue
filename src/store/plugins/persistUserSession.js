@@ -4,19 +4,22 @@
  */
 const USER_OBJECT_KEY = "Auth-user"
 const TOKEN_KEY = "Auth-token"
+const USER_MENUS = "Auth-user-menu"
 
 export default store => {
   const userObject = window.localStorage.getItem(USER_OBJECT_KEY)
   const userToken = window.localStorage.getItem(TOKEN_KEY)
+  const userMenus = window.localStorage.getItem(USER_MENUS)
 
   /**
    *
    * GARANTE QUE A SESSÃO VAI SER RECARREGADA CASO UM F5 SEJA CHAMADO
    *
    */
-  if (userObject && userToken) {
+  if (userObject && userToken && userMenus) {
     store.commit("Auth/SET_USER", JSON.parse(userObject))
     store.commit("Auth/SET_TOKEN", JSON.parse(userToken))
+    store.commit("Auth/SET_MENUS", JSON.parse(userMenus))
   }
 
   store.subscribe((mutation) => {
@@ -26,6 +29,10 @@ export default store => {
 
     if (mutation.type === "Auth/SET_TOKEN") {
       window.localStorage.setItem(TOKEN_KEY, JSON.stringify(mutation.payload))
+    }
+
+    if (mutation.type === "Auth/SET_MENUS"){
+      window.localStorage.setItem(USER_MENUS, JSON.stringify(mutation.payload))
     }
   })
 }

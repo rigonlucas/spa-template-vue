@@ -74,20 +74,31 @@
 </template>
 
 <script>
-import {mapActions} from "vuex"
+import {mapActions, mapGetters} from "vuex"
 
 export default {
   name: "UserBar",
   data() {
     return {
-      user: this.$store.getters["Auth/user"],
+      user: this.getUser(),
     }
   },
   methods: {
-    ...mapActions({ dispatchLogout: "Auth/logout"  }),
+    ...mapGetters({
+        getUser: "Auth/user",
+    }),
+    ...mapActions({
+        dispatchLogout: "Auth/logout",
+        forceLogout: "Auth/forceLogout",
+    }),
     async logout() {
-      await this.dispatchLogout()
-      this.$router.push({ name: "login", query: { param: "teste", teste: "teste" } })
+      try {
+        await this.dispatchLogout()
+      } catch (error) {
+        this.forceLogout()
+      } finally {
+        this.$router.push({ name: "login", query: { param: "teste", teste: "teste" } })
+      }
     },
     themeChange(){
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
