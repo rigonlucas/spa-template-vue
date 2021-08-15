@@ -168,7 +168,7 @@
                                     Entregar redação
                                 </v-card-title>
                                 <v-card-text>
-                                    {{ texto }}
+                                    <pre>{{ texto }}</pre>
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>

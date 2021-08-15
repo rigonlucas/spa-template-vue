@@ -96,12 +96,12 @@
       },
     },
     mounted() {
-      this.menus = this.userMenus()
-      console.log(Object.keys(this.menus.left))
-      console.log(Object.entries(this.menus.left))
+      //this.menus = this.userMenus()
+      //console.log(Object.keys(this.menus.left))
+      //console.log(Object.entries(this.menus.left))
     },
     methods: {
-      ...mapGetters({ userMenus: "Auth/userMenus" }),
+      //...mapGetters({ userMenus: "Auth/userMenus" }),
       toggleLeftMenu(){
         this.showLeftMenu = !this.showLeftMenu
       },
